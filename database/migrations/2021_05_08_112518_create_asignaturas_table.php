@@ -8,13 +8,15 @@ class CreateAsignaturasTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     *["cod_asignatura", "abreviatura", "nombre"]
      * @return void
      */
     public function up()
     {
         Schema::create('asignaturas', function (Blueprint $table) {
-            $table->id();
+            $table->integer("cod_asignatura")->primary();
+            $table->string("abreviatura");
+            $table->string("nombre");
             $table->timestamps();
         });
     }

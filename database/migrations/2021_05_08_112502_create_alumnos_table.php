@@ -8,13 +8,16 @@ class CreateAlumnosTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     *"cod_alumno", "nombre", "apellido1", "apellido2"
      * @return void
      */
     public function up()
     {
         Schema::create('alumnos', function (Blueprint $table) {
-            $table->id();
+            $table->integer("cod_alumno")->primary();
+            $table->string("nombre");
+            $table->string("apellido1");
+            $table->string("apellido2");
             $table->timestamps();
         });
     }
