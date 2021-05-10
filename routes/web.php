@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ControladorRedireccion;
 use App\Http\Controllers\principal;
 use Illuminate\Support\Facades\Route;
 
@@ -14,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [principal::class, "controlar"]);
+Route::get('/', [ControladorRedireccion::class, "redireccionar"]);
+Route::get('login', [ControladorRedireccion::class, "redireccionar"]);
+Route::get('hola/manuel', [ControladorRedireccion::class, "redireccionar"]);
