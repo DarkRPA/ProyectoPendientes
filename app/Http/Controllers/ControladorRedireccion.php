@@ -8,9 +8,18 @@ use Illuminate\Http\Request;
 class ControladorRedireccion extends Controller
 {
     private $listaUriBlancos = [
-        "login", "registros"
+        "login", "registrar"
     ];
 
+
+    /**
+     * Metodo encargardo de la redireccion basico de las vistas. Este metodo debría de ser llamado por cada verbo GET que poseamos
+     * en una ruta. El metodo agarrará las URI y la desfragmentará. Analizará que es lo que podría ser una vista o un parametro
+     *
+     * Y devuelve una vista parametrizada, en caso de que esa vista deba de ser accesible solo con una sesion se comprobará que el maestro
+     * posee una sesion valida y, en caso positivo le llevará al objetivo, en caso negativo se le redigirá a la página inicial o cualquier
+     * otra
+     */
     public function redireccionar(Request $peticion)
     {
         $obtenerUri = $peticion->getRequestUri();
@@ -48,14 +57,20 @@ class ControladorRedireccion extends Controller
                 $buscarMaestro = Profesor::where("tokenSesion", $cookie)->limit(1)->get();
 
                 if(isset($buscarMaestro)){
-                    //-----
+                    return view($nombreVista, $parametros);
                 }
             }
 
-            return view("welcome");
+            return view("lobby");
         }
     }
 
+    /**
+     * Metodo encargado del formateado de las URI, este metodo de lo que se encarga es de dividir las URI en trozos independientes ordenados
+     * y convertidos a array
+     *
+     *
+     */
     private function formatearUri(String $datos)
     {
         $arrayUri = array();

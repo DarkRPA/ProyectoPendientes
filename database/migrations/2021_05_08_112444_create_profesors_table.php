@@ -16,11 +16,10 @@ class CreateProfesorsTable extends Migration
         Schema::create('profesors', function (Blueprint $table) {
             $table->integer("cod_profesor")->primary();
             $table->string("email");
+            $table->string("password");
             $table->string("nombre");
             $table->string("apellidos");
             $table->string("tokenSesion");
-            $table->string("cod_verificacion");
-            $table->boolean("verificado");
             $table->timestamps();
         });
     }
