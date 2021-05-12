@@ -11,6 +11,8 @@ class ControladorRedireccion extends Controller
         "login", "registrar"
     ];
 
+    private $listaUriAdmin = ["administracion"];
+
 
     /**
      * Metodo encargardo de la redireccion basico de las vistas. Este metodo debría de ser llamado por cada verbo GET que poseamos
@@ -25,11 +27,18 @@ class ControladorRedireccion extends Controller
         $obtenerUri = $peticion->getRequestUri();
         $desfragmentarUri = $this->formatearUri($obtenerUri);
         $esBlanco = false;
+        $esAdmin = false;
 
         //dd($desfragmentarUri);
         for($i = 0; $i < sizeof($this->listaUriBlancos); $i++){
             if($desfragmentarUri[0] == $this->listaUriBlancos[$i]){
                 $esBlanco = true;
+            }
+        }
+
+        for($i = 0; $i < sizeof($this->listaUriAdmin); $i++){
+            if($desfragmentarUri[0] == $this->listaUriAdmin[$i]){
+                $esAdmin = true;
             }
         }
 
@@ -51,18 +60,23 @@ class ControladorRedireccion extends Controller
         if($esBlanco){
             return view($nombreVista, $parametros);
         }else{
-
             $cookie = $peticion->cookie("sesion");
             if(isset($cookie)){
                 $buscarMaestro = Profesor::where("tokenSesion", $cookie)->limit(1)->get();
 
                 if(isset($buscarMaestro)){
-                    return view($nombreVista, $parametros);
+                    if($esAdmin){
+                        $atributos = $buscarMaestro->getAllAttributes();
+                        if($atributos["es_admin"]){
+                            return view($nombreVista, $parametros);
+                        }
+                    }else{
+                        return view($nombreVista, $parametros);
+                    }
                 }
             }
-
-            return view("lobby");
         }
+        return view("lobby");
     }
 
     /**

@@ -20,6 +20,7 @@ class CreateProfesorsTable extends Migration
             $table->string("nombre");
             $table->string("apellidos");
             $table->string("tokenSesion");
+            $table->boolean("es_admin")->nullable();
             $table->timestamps();
         });
     }

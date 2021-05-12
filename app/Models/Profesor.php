@@ -10,6 +10,6 @@ class Profesor extends Model
     use HasFactory;
 
     protected $fillable = [
-        "cod_profesor", "email", "nombre", "apellidos", "tokenSesion", "cod_verificacion", "verificado"
+        "cod_profesor", "email", "nombre", "apellidos", "tokenSesion", "cod_verificacion", "verificado", "es_admin"
     ];
 }
