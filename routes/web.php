@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ControladorAutenticacion;
+use App\Http\Controllers\ControladorInstalacion;
 use App\Http\Controllers\ControladorRedireccion;
 use App\Http\Controllers\principal;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,4 @@ Route::post('registrar_password', [ControladorAutenticacion::class, "verificarCo
 Route::post('registrar_confirm1', [ControladorAutenticacion::class, "enviarCorreoConfirmacion"])->name("registro.confirmar1");
 Route::post('registrar_confirm2', [ControladorAutenticacion::class, "confirmarCodigo"])->name("registro.confirmar2");
 
-Route::get('hola/manuel', [ControladorRedireccion::class, "redireccionar"]);
+Route::post('instalador', [ControladorInstalacion::class, "verificarEInstalarFicheros"])->name("instalador.verificacion");

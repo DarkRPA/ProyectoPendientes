@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\instalado;
 use App\Models\Profesor;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,10 @@ class ControladorRedireccion extends Controller
         $desfragmentarUri = $this->formatearUri($obtenerUri);
         $esBlanco = false;
         $esAdmin = false;
+
+        if(!(instalado::first())){
+            return view("instalacion.primer_inicio");
+        }
 
         //dd($desfragmentarUri);
         for($i = 0; $i < sizeof($this->listaUriBlancos); $i++){
