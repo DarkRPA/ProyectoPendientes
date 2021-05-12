@@ -8,14 +8,39 @@ class ControladorInstalacion extends Controller
 {
     public function verificarEInstalarFicheros(Request $peticion)
     {
-        $ficheroAlumnos = fopen($peticion->file("csvAlumnos")->path(), "r");
-        $ficheroCursos = $peticion->file("csvCursos");
-        $ficheroAsignaturas = $peticion->file("csvAsignaturas");
+        //$ficheroAlumnos = fopen($peticion->file("csvAlumnos")->path(), "r");
+        $ficheroCursos = fopen($peticion->file("csvCursos")->path(), "r");
+        //$ficheroAsignaturas = fopen($peticion->file("csvAsignaturas")->path(), "r");
         //Añadir fichero maestros aqui
 
 
 
-        $this->convertAlumnosArray($ficheroAlumnos);
+
+        //$this->convertAlumnosArray($ficheroAlumnos);
+        $this->convertCursosArray($ficheroCursos);
+    }
+
+    public function convertCursosArray($fichero)
+    {
+        $principal = array();
+
+        while(($dato = fgetcsv($fichero, 0, ",")) != false){
+            array_push($principal, $dato);
+        }
+
+        dd($principal);
+        return $principal;
+    }
+
+    public function convertAsignaturasArray($fichero)
+    {
+        $principal = array();
+
+        while(($dato = fgetcsv($fichero, 0, ",")) != false){
+            array_push($principal, $dato);
+        }
+
+        return $principal;
     }
 
     public function convertAlumnosArray($fichero)
@@ -24,8 +49,6 @@ class ControladorInstalacion extends Controller
         //y el segundo con esa informacion si recursiva, interpretada como cod_matricula + cod_asignatura
         $principal = array();
         $real = array();
-
-        $repetido = true;
 
         while(($dato = fgetcsv($fichero, 0, ",")) != false){
             array_push($principal, $dato);
