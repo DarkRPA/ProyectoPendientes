@@ -13,7 +13,7 @@
             <h2>Por favor, introduzca sus datos</h2>
 
             @if (isset($valor) && $valor == true)
-                <h3>Contraseña incorrecta</h3>
+                <h3>Contraseña o usuario incorrectos</h3>
             @endif
 
             <form action="{{ route('auth.loguear') }}" method="post">

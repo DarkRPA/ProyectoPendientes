@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profesor;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
@@ -24,7 +25,18 @@ class ControladorAutenticacion extends Controller
         if(sizeof($buscarMaestro) == 0){
             return view("login", ["valor" => true]);
         }else{
-            //Si de verdad existe debemos de
+            //Si de verdad existe debemos de darle un token de sesion y llevarlo al home
+            //ajax se encargará de mostrar los datos iniciales cuando seleccione las opciones
+
+            //Generamos el token
+
+            $tokenGenerado = Str::uuid()->toString();
+            Profesor::where([
+                ["email", "=", $email],
+                ["password", "=", $contraCifrada]
+            ])->limit(1)->update(["tokenSesion" => $tokenGenerado]);
+
+            Cookie::queue("sesion", $tokenGenerado, 360);
         }
     }
     public static function comprobarToken(String $token)
@@ -43,6 +55,14 @@ class ControladorAutenticacion extends Controller
     {
         $email = $peticion->input("email");
         if(preg_match("/.*@iesantoniogala.es/", $email) != 0){
+
+            //Debemos de comprobar que el correo esta en la base de datos
+            $maestroBuscar = Profesor::where("email", $email)->limit(1)->get();
+
+            if(sizeof($maestroBuscar) == 0){
+                return view("registrar", ["valor" => "noCorreo"]);
+            }
+
             Cookie::queue("email", $email, 30);
             return view("registro.registro_contrasena");
         }else{
@@ -72,7 +92,7 @@ class ControladorAutenticacion extends Controller
 
             $email = request()->cookie("email");
 
-            $message->from('john@johndoe.com', 'Admin');
+            $message->from('welcome@pagina', 'Admin');
             $message->to($email, $email)->subject("Codigo de verificacion")->setBody("Bienvenido \n Su codigo de verificacion es: ".$numGenerado);
         });
 

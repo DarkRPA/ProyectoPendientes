@@ -11,6 +11,10 @@
         <h1>Bienvenido al asistente de registro. Primero indique su correo electronico.</h1>
         @if (isset($valor) && $valor == "errorCorreo")
             <div><p>El correo electronico no es valido, debe de tener un correo corporativo</p></div>
+        @elseif (isset($valor) && $valor == "noCorreo")
+            <div>
+                <p>El correo que ha proporcionado no existe en nuestra base de datos, por favor compruebe por errores</p>
+            </div>
         @endif
         <form action="{{ route('registro.verificarCorreo') }}" method="post">
             @csrf

@@ -62,6 +62,10 @@ class ControladorRedireccion extends Controller
             }
         }
 
+        if($nombreVista == "/"){
+            return view("lobby", $parametros);
+        }
+
         if($esBlanco){
             return view($nombreVista, $parametros);
         }else{
