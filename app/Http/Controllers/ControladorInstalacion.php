@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class ControladorInstalacion extends Controller
 {
+    //detenido desarrollo
     public function verificarEInstalarFicheros(Request $peticion)
     {
         //$ficheroAlumnos = fopen($peticion->file("csvAlumnos")->path(), "r");

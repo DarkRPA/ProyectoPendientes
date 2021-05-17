@@ -30,9 +30,9 @@ class ControladorRedireccion extends Controller
         $esBlanco = false;
         $esAdmin = false;
 
-        if(!(instalado::first())){
+        /*if(!(instalado::first())){
             return view("instalacion.primer_inicio");
-        }
+        }*/
 
         //dd($desfragmentarUri);
         for($i = 0; $i < sizeof($this->listaUriBlancos); $i++){
