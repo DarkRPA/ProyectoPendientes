@@ -6,6 +6,12 @@ use App\Models\instalado;
 use App\Models\Profesor;
 use Illuminate\Http\Request;
 
+/**
+ * Controlador de redireccion, este controlador sera el que redirija todo el flujo de nuestra aplicación
+ * verificando que cumpla con lo necesario, ejemplo, sea admin
+ *
+ * @author Daniel caparros Duran
+ */
 class ControladorRedireccion extends Controller
 {
     private $listaUriBlancos = [

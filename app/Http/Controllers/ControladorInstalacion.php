@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+/**
+ * Controlador de instalación, desarrollo detenido. Debería de servir para la importación de archivos
+ * CSV con datos
+ *
+ * @author Daniel caparros duran
+ */
 class ControladorInstalacion extends Controller
 {
     //detenido desarrollo

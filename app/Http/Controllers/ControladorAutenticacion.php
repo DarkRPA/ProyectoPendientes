@@ -8,8 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Controlador encargado de todas las operaciones relacionadas con el registro y la creacion de sesiones, aparte.
+ * Ofrece metodos para saber si el usuario esta realmente logueado
+ *
+ * @author Daniel caparros duran
+ */
 class ControladorAutenticacion extends Controller
 {
+    /**
+     * Metodo loguear, este metodo se encargara de procesar la peticion de login
+     * y generará un token de sesion que expirará a las 6 horas
+     */
     public function loguear(Request $peticion)
     {
         $email = $peticion->input("email");
@@ -39,6 +49,11 @@ class ControladorAutenticacion extends Controller
             Cookie::queue("sesion", $tokenGenerado, 360);
         }
     }
+
+    /**
+     * Metodo estatico para ofrecer a otros controladores herramientas para verificar la sesion actual del token
+     * que posee el usuario, si es que tiene
+     */
     public static function comprobarToken(String $token)
     {
         $buscarMaestro = Profesor::where("tokenSesion", $token)->limit(1)->get();
@@ -51,6 +66,9 @@ class ControladorAutenticacion extends Controller
     //-----------------------------------------------------------------
     //Apartado registro
 
+    /**
+     * Primera parte del registro, verificamos que el correo tanto exista como sea valido
+     */
     public function verificarCorreo(Request $peticion)
     {
         $email = $peticion->input("email");
@@ -70,6 +88,9 @@ class ControladorAutenticacion extends Controller
         }
     }
 
+    /**
+     * Ciframos y verificamos que la contraseña sea correcta
+     */
     public function verificarContrasena(Request $peticion)
     {
         $contra = crypt($peticion->input("password"), "cifrador");
@@ -83,6 +104,9 @@ class ControladorAutenticacion extends Controller
         }
     }
 
+    /**
+     * Metodo encargado de enviar un codigo de verificación al usuario
+     */
     public function enviarCorreoConfirmacion(Request $peticion)
     {
 
@@ -100,6 +124,9 @@ class ControladorAutenticacion extends Controller
     }
 
 
+    /**
+     * Metodo encargado de verificar el codigo de verificacion enviado por el metodo anterior e introducido por el usuario
+     */
     public function confirmarCodigo(Request $peticion)
     {
         $codigoEnviado = $peticion->input("codigo");
