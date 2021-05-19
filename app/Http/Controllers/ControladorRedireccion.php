@@ -48,7 +48,7 @@ class ControladorRedireccion extends Controller
         }
 
         //echo "a ".$esBlanco;
-        $parametros = array();
+        $parametros = [];
         $nombreVista = "/";
 
         for($i = sizeof($desfragmentarUri); $i > 0; $i--){
@@ -63,6 +63,11 @@ class ControladorRedireccion extends Controller
         }
 
         if($nombreVista == "/"){
+            if($peticion->cookie("sesion") !== null){
+                if(ControladorAutenticacion::comprobarToken($peticion->cookie("sesion"))){
+                    $parametros["tieneSesion"] = true;
+                }
+            }
             return view("lobby", $parametros);
         }
 

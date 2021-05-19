@@ -12,7 +12,10 @@
 
     <h1>Bienvenido a la aplicacion pendientes</h1>
     <h2>Que desea hacer?</h2>
-    <a href="/login">Loguear</a>
+    <a href="/login">Iniciar Sesion</a>
     <a href="/registrar">Registrar</a>
+    @if (isset($tieneSesion) && $tieneSesion === true)
+        <a href="/home">Home</a>
+    @endif
 </body>
 </html>
